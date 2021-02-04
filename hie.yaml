@@ -1,0 +1,14 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "todoApp:lib"
+
+    - path: "./app/Main.hs"
+      component: "todoApp:exe:todoApp-exe"
+
+    - path: "./app/Paths_haskell_toy_example.hs"
+      component: "todoApp:exe:todoApp-exe"
+
+    - path: "./test"
+      component: "todoApp:test:todoApp-test"
+
