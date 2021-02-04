@@ -1,4 +1,4 @@
-name:                todoApp
+name:                todo-app-cli
 version:             0.1.0.0
 
 dependencies:
@@ -19,7 +19,7 @@ library:
   source-dirs: src
 
 executables:
-  todoApp-exe:
+  todo-app-cli-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -27,10 +27,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - todoApp
+    - todo-app-cli
 
 tests:
-  todoApp-test:
+  todo-app-cli-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -38,7 +38,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - todoApp
+    - todo-app-cli
     - hspec
     - hspec-discover
     - QuickCheck

@@ -1,14 +1,14 @@
 cradle:
   stack:
     - path: "./src"
-      component: "todoApp:lib"
+      component: "todo-app-cli:lib"
 
     - path: "./app/Main.hs"
-      component: "todoApp:exe:todoApp-exe"
+      component: "todo-app-cli:exe:todo-app-cli-exe"
 
     - path: "./app/Paths_haskell_toy_example.hs"
-      component: "todoApp:exe:todoApp-exe"
+      component: "todo-app-cli:exe:todo-app-cli-exe"
 
     - path: "./test"
-      component: "todoApp:test:todoApp-test"
+      component: "todo-app-cli:test:todo-app-cli-test"
 

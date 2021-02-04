@@ -1,4 +1,4 @@
-# todoApp
+# todo-app-cli
 
 ## How to build and run locally
 
@@ -18,7 +18,7 @@ stack build --test
 ```
 To run the executable,
 ```
-stack exec todoApp-exe
+stack exec todo-app-cli-exe
 ```
 For a faster feedback loop,
 ```
