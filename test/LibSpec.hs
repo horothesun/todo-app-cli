@@ -5,7 +5,7 @@ import Test.Hspec.QuickCheck
 import Test.QuickCheck.Property
 import Lib
 import Test.QuickCheck
-import Test.QuickCheck.Gen
+-- import Test.QuickCheck.Gen
 
 -- simpleGen :: Gen String
 -- simpleGen = ...
