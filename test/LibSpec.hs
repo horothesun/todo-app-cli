@@ -20,10 +20,8 @@ positiveNumberGen = fmap abs arbitrary
 
 spec :: Spec
 spec = describe "TodoApp tests" $ do
-  modifyMaxSuccess (const 10000) $
-    prop "title is not valid if empty or blank" $
-      \s -> all isSpace s ==> isTitleValid s == InvalidTitle
+  prop "title is not valid if empty or blank" $
+    \s -> all isSpace s ==> isTitleValid s == InvalidTitle
 
-  modifyMaxSuccess (const 10000) $
-    prop "title is valid whenver it's not empty or blank" $
-      \t -> (not . all isSpace) t ==> isTitleValid t == ValidTitle t
+  prop "title is valid whenver it's not empty or blank" $
+    \t -> (not . all isSpace) t ==> isTitleValid t == ValidTitle t
