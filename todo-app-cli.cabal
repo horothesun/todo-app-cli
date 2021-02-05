@@ -1,8 +1,10 @@
 cabal-version: 3.0
 
--- This file has been generated from package.yaml by hpack version 0.34.3.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: a838a508436a52c8f6e879d7d6ea65ebd424125d3289180780a55fce30cc8d2e
 
 name:           todo-app-cli
 version:        0.1.0.0
@@ -54,6 +56,7 @@ test-suite todo-app-cli-test
     , containers
     , hspec
     , hspec-discover
+    , quickcheck-instances
     , text
     , todo-app-cli
   default-language: Haskell2010

@@ -2,6 +2,8 @@ module Lib where
 
 import Control.Monad (mfilter)
 import Data.Char (isSpace)
+import Data.List (dropWhileEnd)
+import Data.Text (strip)
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
@@ -10,17 +12,18 @@ data Title = InvalidTitle | ValidTitle String deriving (Eq, Show)
 
 isTitleValid :: String -> Title
 isTitleValid "" = InvalidTitle
--- isTitleValid t | all isSpace t = InvalidTitle
 isTitleValid t = ValidTitle t
 
--- Approach 2
-f "" = Nothing
-f s = Just s
+nonEmptyTitle "" = Nothing
+nonEmptyTitle s = Just s
 
-isTitleValid2 = f . trim
+title = title2
 
-trim :: String -> String
-trim s = undefined
+title2 = nonEmptyTitle . trim
+
+title3 = nonEmptyTitle . strip
+
+trim = dropWhileEnd isSpace . dropWhile isSpace
 
 -- Approach 3
 
