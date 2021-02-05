@@ -7,6 +7,4 @@ data Title = InvalidTitle | ValidTitle String deriving (Eq, Show)
 
 isTitleValid :: String -> Title
 isTitleValid "" = InvalidTitle
--- isTitleValid " " = InvalidTitle
-isTitleValid t  = ValidTitle t
-
+isTitleValid t = ValidTitle t
