@@ -12,6 +12,12 @@ import Test.QuickCheck.Property
 -- simpleGen :: Gen String
 -- simpleGen = ...
 
+spaceCharGen :: Gen Char
+spaceCharGen = suchThat arbitrary isSpace
+
+emptyOrBlankStringGen :: Gen String
+emptyOrBlankStringGen = listOf spaceCharGen
+
 positiveNumberGen :: Gen Int
 positiveNumberGen = fmap abs arbitrary
 
@@ -20,8 +26,11 @@ positiveNumberGen = fmap abs arbitrary
 
 spec :: Spec
 spec = describe "TodoApp tests" $ do
-  prop "title is not valid if empty or blank" $
-    \t -> all isSpace t ==> isTitleValid t == InvalidTitle
+  modifyMaxSuccess (const 5000) $
+    prop "title is not valid if empty or blank" $
+      forAll emptyOrBlankStringGen $
+        \t -> isTitleValid t == InvalidTitle
 
-  prop "title is valid whenver it's not empty or blank" $
-    \t -> (not . all isSpace) t ==> isTitleValid t == ValidTitle t
+  modifyMaxSuccess (const 5000) $
+    prop "title is valid whenver it's not empty or blank" $
+      \t -> (not . all isSpace) t ==> isTitleValid t /= InvalidTitle
