@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         stack: ["2.5.1"]
-        ghc: ["8.10.1"]
+        ghc: ["8.10.3"]
 
     steps:
     - name: Cancel previous runs
