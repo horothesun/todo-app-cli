@@ -21,7 +21,7 @@ positiveNumberGen = fmap abs arbitrary
 spec :: Spec
 spec = describe "TodoApp tests" $ do
   prop "title is not valid if empty or blank" $
-    \s -> all isSpace s ==> isTitleValid s == InvalidTitle
+    \t -> all isSpace t ==> isTitleValid t == InvalidTitle
 
   prop "title is valid whenver it's not empty or blank" $
     \t -> (not . all isSpace) t ==> isTitleValid t == ValidTitle t
