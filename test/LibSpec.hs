@@ -1,6 +1,7 @@
 module LibSpec where
 
 import Data.Char
+import Data.Either
 import Lib
 import Test.Hspec
 import Test.Hspec.QuickCheck
@@ -25,16 +26,22 @@ spec = describe "TodoApp tests" $ do
       forAll emptyOrBlankGen $ \s ->
         forAll arbitrary $ \a ->
           forAll arbitrary $ \b ->
-            checkTodo (s :: String) a (b :: Int) == TitleEmpty
+            checkTodo (s :: String) a (b :: Int) == Left TitleEmpty
 
     prop "must return invalid title ONLY IF title is empty or blank" $
-      \s a b -> (not . all isSpace) s ==> checkTodo s a (b :: Int) /= TitleEmpty
+      \s a b -> (not . all isSpace) s ==> checkTodo s a (b :: Int) /= Left TitleEmpty
 
     prop "never return PastDueDate when no input due date is provided" $
-      \s a -> checkTodo s Nothing (a :: Int) /= PastDueDate
+      \s a -> checkTodo s Nothing (a :: Int) /= Left PastDueDate
 
     prop "never return PastDueDate when no input due date is provided" $
-      \s a b -> (not . all isSpace) s && a < b ==> checkTodo s (Just a) (b :: Int) == PastDueDate
+      \s a b -> (not . all isSpace) s && a < b ==> checkTodo s (Just a) (b :: Int) == Left PastDueDate
+
+    prop "always successful when title non empty/blank and due date not present (redundant test)" $
+      \s a -> (not . all isSpace) s ==> isRight $ checkTodo s Nothing (a :: Int)
+
+    prop "always successful when title non empty/blank and due date is present and in the future(redundant test)" $
+      \s a b -> (not . all isSpace) s && a > b ==> isRight $ checkTodo s (Just a) (b :: Int)
 
   describe "trim" $ do
     prop "must be idempotent" $

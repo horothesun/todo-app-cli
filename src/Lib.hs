@@ -16,30 +16,30 @@ data Todo s a = Todo
   }
   deriving (Eq, Show)
 
-data TodoResult s a
-  = TitleEmpty
-  | PastDueDate
-  | ValidTodo (Todo s a)
-  deriving (Eq, Show)
+data TodoValidationError = TitleEmpty | PastDueDate deriving (Eq, Show)
 
-data TodoErrors = TitleError | PastDueDateError deriving (Eq, Show)
+--checkTodo :: Ord p => String -> Maybe p -> p -> TodoResult String p
+-- checkTodo = checkTodoConvert checkTodo1
 
-checkTodo :: Ord p => String -> Maybe p -> p -> TodoResult String p
-checkTodo = checkTodoConvert checkTodo1
+-- checkTodo' :: Ord p => String -> Maybe p -> p -> TodoResult String p
+-- checkTodo' = checkTodoConvert checkTodo2
 
-checkTodo' :: Ord p => String -> Maybe p -> p -> TodoResult String p
-checkTodo' = checkTodoConvert checkTodo2
+checkTodo :: Ord p => String -> Maybe p -> p -> Either TodoValidationError (Todo String p)
+checkTodo = checkTodo1
+
+checkTodo' :: Ord p => String -> Maybe p -> p -> Either TodoValidationError (Todo String p)
+checkTodo' = checkTodo2
 
 -- checkTodo :: (Eq a, IsString a) => a -> p -> TodoResult a p
-checkTodo1 :: Ord p => String -> Maybe p -> p -> Either TodoErrors (Todo String p)
-checkTodo1 s _ _ | (null . trim) s = Left TitleError
-checkTodo1 _ (Just a) b | a < b = Left PastDueDateError
+checkTodo1 :: Ord p => String -> Maybe p -> p -> Either TodoValidationError (Todo String p)
+checkTodo1 s _ _ | (null . trim) s = Left TitleEmpty
+checkTodo1 _ (Just a) b | a < b = Left PastDueDate
 checkTodo1 s a b = Right $ Todo s a b
 
-checkTodo2 :: Ord p => String -> Maybe p -> p -> Either TodoErrors (Todo String p)
+checkTodo2 :: Ord p => String -> Maybe p -> p -> Either TodoValidationError (Todo String p)
 checkTodo2 s a b = do
-  t <- maybeToRight TitleError (checkTitle s)
-  d <- mapLeft (const PastDueDateError) (checkDueDate b a)
+  t <- maybeToRight TitleEmpty (checkTitle s)
+  d <- mapLeft (const PastDueDate) (checkDueDate b a)
   return $ Todo t d b
 
 checkTitle :: String -> Maybe String
@@ -59,11 +59,3 @@ trimRight = dropWhileEnd isSpace
 
 trimLeft :: String -> String
 trimLeft = dropWhile isSpace
-
-checkTodoConvert :: (String -> Maybe a -> a -> Either TodoErrors (Todo s a)) -> String -> Maybe a -> a -> TodoResult s a
-checkTodoConvert f s a b = convert $ f s a b
-  where
-    convert :: Either TodoErrors (Todo s a) -> TodoResult s a
-    convert (Left TitleError) = TitleEmpty
-    convert (Left PastDueDateError) = PastDueDate
-    convert (Right t) = ValidTodo t
