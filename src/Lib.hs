@@ -4,7 +4,8 @@ import Data.Char (isSpace)
 import Data.List (dropWhileEnd)
 
 someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+someFunc = do
+  putStrLn "someFunc"
 
 data TodoResult s a
   = TitleEmpty
@@ -17,19 +18,19 @@ data TodoResult s a
   deriving (Eq, Show)
 
 -- checkTodo :: (Eq a, IsString a) => a -> p -> TodoResult a p
-checkTodo :: String -> p -> TodoResult String p
-checkTodo s _ | (null . trim) s = TitleEmpty
-checkTodo _ _ = PastDueDate
+checkTodo :: String -> Maybe p -> p -> TodoResult String p
+checkTodo s _ _ | (null . trim) s = TitleEmpty
+checkTodo _ _ _ = PastDueDate
 
-checkTodo2 :: s -> a -> TodoResult s a
-checkTodo2 = undefined
+checkTodo2 :: String -> Maybe p -> p -> TodoResult String p
+checkTodo2 = checkTodo
 
 trim :: String -> String
 trim = trimRight . trimLeft
-  where
-    -- trimRight = reverse . trimLeft . reverse
-    trimRight = dropWhileEnd isSpace
-    trimLeft = dropWhile isSpace
+
+trimRight = dropWhileEnd isSpace
+
+trimLeft = dropWhile isSpace
 
 -- OLD
 
