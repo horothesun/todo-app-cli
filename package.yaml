@@ -43,7 +43,6 @@ tests:
     - hspec
     - hspec-discover
     - QuickCheck
-    - quickcheck-instances
 
 
 verbatim:
