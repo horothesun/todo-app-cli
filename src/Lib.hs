@@ -50,10 +50,11 @@ checkTitle :: String -> Maybe String
 checkTitle = mfilter (not . null . trim) . Just
 
 checkDueDate :: Ord p => p -> Maybe p -> Either () (Maybe p)
-checkDueDate _ Nothing = Right Nothing
-checkDueDate n (Just d)
-  | d < n = Left ()
-  | otherwise = Right (Just d)
+checkDueDate n = traverse f
+  where
+    f d
+      | d < n = Left ()
+      | otherwise = Right d
 
 trim :: String -> String
 trim = trimRight . trimLeft
