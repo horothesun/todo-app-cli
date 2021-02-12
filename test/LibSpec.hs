@@ -19,7 +19,7 @@ spec :: Spec
 spec = describe "TodoApp tests" $ do
   describe "checkTodo" $ do
     prop "check that the new implementation is consistent with the legacy one (this test is just an example)" $
-      \s a b -> checkTodo (s :: String) a (b :: Int) == (checkTodo2 s a b)
+      \s a b -> checkTodo (s :: String) a (b :: Int) == (checkTodo' s a b)
 
     prop "must return invalid title IF title is empty or blank" $
       forAll emptyOrBlankGen $ \s ->
@@ -60,3 +60,6 @@ spec = describe "TodoApp tests" $ do
 
     it "for example, must remove spaces at the beginning and at the end but not in the middle" $
       trim "  he ll  o " `shouldBe` "he ll  o"
+
+    it "test" $
+      checkTodo "a " (Just 0) 0 `shouldBe` checkTodo' "a " (Just 0) 0

@@ -4,7 +4,7 @@ cabal-version: 3.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a838a508436a52c8f6e879d7d6ea65ebd424125d3289180780a55fce30cc8d2e
+-- hash: 8403ecda97975ca12a7f1910a6d50ba6020a8d033e7a1dca24617016af8a3680
 
 name:           todo-app-cli
 version:        0.1.0.0
@@ -22,6 +22,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , either
     , text
   default-language: Haskell2010
 
@@ -36,6 +37,7 @@ executable todo-app-cli-exe
   build-depends:
       base >=4.7 && <5
     , containers
+    , either
     , text
     , todo-app-cli
   default-language: Haskell2010
@@ -54,6 +56,7 @@ test-suite todo-app-cli-test
       QuickCheck
     , base >=4.7 && <5
     , containers
+    , either
     , hspec
     , hspec-discover
     , quickcheck-instances
