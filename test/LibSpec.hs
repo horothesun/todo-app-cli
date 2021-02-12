@@ -1,11 +1,25 @@
 module LibSpec where
 
-import Data.Char
-import Data.Either
+import Data.Char (isSpace)
+import Data.Either (isRight)
 import Lib
-import Test.Hspec
-import Test.Hspec.QuickCheck
+  ( TodoValidationError (PastDueDate, TitleEmpty),
+    checkTodo,
+    checkTodo',
+    trim,
+    trimLeft,
+    trimRight,
+  )
+import Test.Hspec (Spec, describe, it, shouldBe)
+import Test.Hspec.QuickCheck (modifyMaxSuccess, prop)
 import Test.QuickCheck
+  ( Arbitrary (arbitrary),
+    Gen,
+    forAll,
+    listOf,
+    suchThat,
+    (==>),
+  )
 
 notEmptyStringGen :: Gen String
 notEmptyStringGen = suchThat arbitrary (not . any isSpace)
