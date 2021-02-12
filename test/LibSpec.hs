@@ -19,8 +19,9 @@ emptyOrBlankGen = listOf spaceCharGen
 spec :: Spec
 spec = describe "TodoApp tests" $ do
   describe "checkTodo" $ do
-    prop "check that the new implementation is consistent with the legacy one (this test is just an example)" $
-      \s a b -> checkTodo (s :: String) a (b :: Int) == (checkTodo' s a b)
+    modifyMaxSuccess (const 5000) $
+      prop "check that the new implementation is consistent with the legacy one (this test is just an example)" $
+        \s a b -> checkTodo (s :: String) a (b :: Int) == checkTodo' s a b
 
     prop "must return invalid title IF title is empty or blank" $
       forAll emptyOrBlankGen $ \s ->

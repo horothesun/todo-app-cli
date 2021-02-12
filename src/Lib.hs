@@ -12,7 +12,7 @@ where
 
 import Control.Monad
 import Data.Char (isSpace)
-import Data.Either.Combinators
+import Data.Either.Combinators (mapLeft, maybeToRight)
 import Data.List (dropWhileEnd)
 
 someFunc :: IO ()
