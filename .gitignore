@@ -21,7 +21,7 @@ stack.yaml.lock
 *.aux
 *.hp
 *.eventlog
-todoApp.cabal
+*.cabal
 hls.log
 cabal.project.local
 cabal.project.local~
