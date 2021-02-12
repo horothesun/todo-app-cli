@@ -1,4 +1,14 @@
-module Lib where
+module Lib
+  ( someFunc,
+    TodoValidationError (..),
+    checkTodo,
+    checkTodo',
+    trim,
+    trimRight,
+    trimLeft,
+    Todo (..),
+  )
+where
 
 import Control.Monad
 import Data.Char (isSpace)
@@ -17,12 +27,6 @@ data Todo s a = Todo
   deriving (Eq, Show)
 
 data TodoValidationError = TitleEmpty | PastDueDate deriving (Eq, Show)
-
---checkTodo :: Ord p => String -> Maybe p -> p -> TodoResult String p
--- checkTodo = checkTodoConvert checkTodo1
-
--- checkTodo' :: Ord p => String -> Maybe p -> p -> TodoResult String p
--- checkTodo' = checkTodoConvert checkTodo2
 
 checkTodo :: Ord p => String -> Maybe p -> p -> Either TodoValidationError (Todo String p)
 checkTodo = checkTodo1

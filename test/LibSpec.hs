@@ -67,6 +67,3 @@ spec = describe "TodoApp tests" $ do
 
     it "for example, must remove spaces at the beginning and at the end but not in the middle" $
       trim "  he ll  o " `shouldBe` "he ll  o"
-
-    it "test" $
-      checkTodo "a " (Just 0) 0 `shouldBe` checkTodo' "a " (Just 0) 0
