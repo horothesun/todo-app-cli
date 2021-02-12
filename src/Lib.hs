@@ -7,22 +7,26 @@ someFunc :: IO ()
 someFunc = do
   putStrLn "someFunc"
 
+data Todo s a = Todo
+  { description :: s,
+    dueDate :: Maybe a,
+    creationDate :: a
+  }
+  deriving (Eq, Show)
+
 data TodoResult s a
   = TitleEmpty
   | PastDueDate
-  | Todo
-      { description :: s,
-        dueDate :: Maybe a,
-        creationDate :: a
-      }
+  | ValidTodo (Todo s a)
   deriving (Eq, Show)
 
 -- checkTodo :: (Eq a, IsString a) => a -> p -> TodoResult a p
-checkTodo :: String -> Maybe p -> p -> TodoResult String p
+checkTodo :: Ord p => String -> Maybe p -> p -> TodoResult String p
 checkTodo s _ _ | (null . trim) s = TitleEmpty
-checkTodo _ _ _ = PastDueDate
+checkTodo _ (Just a) b | a < b = PastDueDate
+checkTodo s a b = ValidTodo $ Todo s a b
 
-checkTodo2 :: String -> Maybe p -> p -> TodoResult String p
+checkTodo2 :: Ord p => String -> Maybe p -> p -> TodoResult String p
 checkTodo2 = checkTodo
 
 trim :: String -> String

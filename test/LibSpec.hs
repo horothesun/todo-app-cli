@@ -30,6 +30,12 @@ spec = describe "TodoApp tests" $ do
     prop "must return invalid title ONLY IF title is empty or blank" $
       \s a b -> (not . all isSpace) s ==> checkTodo s a (b :: Int) /= TitleEmpty
 
+    prop "never return PastDueDate when no input due date is provided" $
+      \s a -> checkTodo s Nothing (a :: Int) /= PastDueDate
+
+    prop "never return PastDueDate when no input due date is provided" $
+      \s a b -> (not . all isSpace) s && a < b ==> checkTodo s (Just a) (b :: Int) == PastDueDate
+
   describe "trim" $ do
     prop "must be idempotent" $
       \s -> (trim . trim) s == trim s
