@@ -1,6 +1,5 @@
 module Lib
-  ( someFunc,
-    TodoValidationError (..),
+  ( TodoValidationError (..),
     checkTodo,
     checkTodo',
     trim,
@@ -14,10 +13,6 @@ import Control.Monad
 import Data.Char (isSpace)
 import Data.Either.Combinators (mapLeft, maybeToRight)
 import Data.List (dropWhileEnd)
-
-someFunc :: IO ()
-someFunc = do
-  putStrLn "someFunc"
 
 data Todo s a = Todo
   { description :: s,
@@ -42,12 +37,12 @@ checkTodo1 s a b = Right $ Todo s a b
 
 checkTodo2 :: Ord p => String -> Maybe p -> p -> Either TodoValidationError (Todo String p)
 checkTodo2 s a b = do
-  t <- maybeToRight TitleEmpty (checkTitle s)
+  t <- mapLeft (const TitleEmpty) (checkTitle s)
   d <- mapLeft (const PastDueDate) (checkDueDate b a)
   return $ Todo t d b
 
-checkTitle :: String -> Maybe String
-checkTitle = mfilter (not . null . trim) . Just
+checkTitle :: String -> Either () String
+checkTitle = maybeToRight () . mfilter (not . null . trim) . Just
 
 checkDueDate :: Ord p => p -> Maybe p -> Either () (Maybe p)
 checkDueDate n = traverse f

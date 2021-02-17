@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import TodoApp
 
 main :: IO ()
-main = someFunc
+main = program
