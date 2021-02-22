@@ -6,6 +6,8 @@ dependencies:
 - text
 - containers
 - either
+- optparse-applicative
+- optparse-generic  
 
 default-extensions:
 - OverloadedStrings
